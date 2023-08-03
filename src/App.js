@@ -89,31 +89,42 @@ const App = () => {
   }, [items]);
 
   return (
-    <section className={styles.container}>
-      <header>
-        <h1>SHOPPING LIST</h1>
-      </header>
-      <div className={styles.inputContainer}>
-        <input
-          type="text"
-          placeholder="adicione ou busque um item..."
-          value={entryItem}
-          onChange={({ target }) => setEntryItem(target.value)}
-          onKeyDown={({ key }) => (key === 'Enter' ? addItem() : null)}
-          autoFocus
+    <>
+      <section className={styles.container}>
+        <header>
+          <h1>Lista de Compras</h1>
+        </header>
+        <div className={styles.inputContainer}>
+          <input
+            type="text"
+            placeholder="adicione ou busque um item..."
+            value={entryItem}
+            onChange={({ target }) => setEntryItem(target.value)}
+            onKeyDown={({ key }) => (key === 'Enter' ? addItem() : null)}
+            autoFocus
+          />
+          <FaPlusCircle className={styles.addBtn} onClick={addItem} />
+        </div>
+        <ItemList
+          items={items.filter((item) =>
+            item.name.toLowerCase().includes(entryItem.toLowerCase()),
+          )}
+          handleChecked={toggleChecked}
+          handleIncrease={increaseQtt}
+          handleDecrease={decreaseQtt}
+          handleRemove={removeItem}
         />
-        <FaPlusCircle className={styles.addBtn} onClick={addItem} />
-      </div>
-      <ItemList
-        items={items.filter((item) =>
-          item.name.toLowerCase().includes(entryItem.toLowerCase()),
-        )}
-        handleChecked={toggleChecked}
-        handleIncrease={increaseQtt}
-        handleDecrease={decreaseQtt}
-        handleRemove={removeItem}
-      />
-    </section>
+      </section>
+      <footer className={styles.footer}>
+        <p>
+          Copyright 2022 -{' '}
+          <a href="https://www.leosb.com.br" target="_blank" rel="noreferrer">
+            Leo
+          </a>{' '}
+          - Todos os direitos reservados.
+        </p>
+      </footer>
+    </>
   );
 };
 
